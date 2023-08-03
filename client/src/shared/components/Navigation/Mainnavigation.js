@@ -8,27 +8,28 @@ import { Link } from 'react-router-dom'
 
 function Mainnavigation(props) {
     const[drawerisOpen, setdrawerisOpen] = useState(false)
-    const openDrawer = ()=>{
+    const openDrawerHandler = ()=>{
         setdrawerisOpen(true)
     }
-    const closeDrawer = ()=>{
+    const closeDrawerHandler = ()=>{
         setdrawerisOpen(false)
     }
   return (
     <>
-    {drawerisOpen && <Backdrop onClick={closeDrawer}/> }
-    {drawerisOpen && <Sidedrawer>
+    {drawerisOpen && <Backdrop onClick={closeDrawerHandler}/> }
+    
+    <Sidedrawer show={drawerisOpen} onClick={closeDrawerHandler}>
         <nav className='main-navigation__drawer-nav'>
             <Navlinks/>
         </nav>
-    </Sidedrawer>}
+    </Sidedrawer>
    <Mainheader>
     <button className='main-navigation__menu-btn'
-        onClick={openDrawer}
+        onClick={openDrawerHandler}
     >
+        <span className="active"/>
         <span/>
-        <span/>
-        <span/>
+        <span className='active'/>
     </button>
     <h1 className='main-navigation__title'>
         <Link to='/'>YourPlaces</Link>
