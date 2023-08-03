@@ -1,4 +1,3 @@
-import React from 'react'
 import PlaceItem from './PlaceItem'
 import Card from '../../shared/UIElements/Card'
 import './PlaceList.css'
