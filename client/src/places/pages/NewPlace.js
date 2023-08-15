@@ -17,7 +17,7 @@ const formReducer = (state,action)=>{
       }
       return{
         ...state,
-        input:{
+        inputs:{
           ...state.inputs,
           [action.inputId]:{value:action.value,isValid:action.isValid}
         },
@@ -42,11 +42,20 @@ function NewPlace() {
     isValid: false
   })
   const inputHandler = useCallback((id, value, isValid)=>{
-    dispatch({type:'INPUT_CHANGE', value:value, isValid:isValid,inputId:id})
+    dispatch({type:'INPUT_CHANGE', 
+      value:value, 
+      isValid:isValid,
+      inputId:id
+    })
   },[dispatch])
+
+  const placeSubmitHandler = (e)=>{
+    e.preventDefault()
+    console.log(formState.inputs);//send to the backend
+  }
   
   return (
-    <form className='place-form'>
+    <form className='place-form' onSubmit={placeSubmitHandler}>
       <Input 
         id="title"
         element='input' 
@@ -65,7 +74,17 @@ function NewPlace() {
         errorText='Please enter a valid descrition (at least 5 characters)'
         onInput={inputHandler}
       />
-      <Button type='submit' disabled={!formState.isValid}>ADD PLACE</Button>
+      <Input
+        id="address" 
+        element='input' 
+        type='text' 
+        label='Adress' 
+        validators={[VALIDATOR_REQUIRE()]} 
+        errorText='Please enter a valid address'
+        onInput={inputHandler}
+      />
+      {/* look at disabled option */}
+      <Button type='submit'  disabled={!formState.isValid}>ADD PLACE</Button>
     </form>
   )
 }
