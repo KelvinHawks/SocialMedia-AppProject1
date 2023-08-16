@@ -3,7 +3,7 @@ import PlaceList from '../components/PlaceList'
 import { useParams } from 'react-router-dom'
 
     const DUMMY_PLACES = [{
-        id:1,
+        id:'p1',
         title:'Empire state building',
         description:'one of the most famous sky scrappers in the world',
         imageUrl:'https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg',
@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom'
         creator:'u1'
     },
     {
-        id:2,
+        id:'p2',
         title:'Empire state building',
         description:'one of the most famous sky scrappers in the world',
         imageUrl:'https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg',
