@@ -9,7 +9,7 @@ function Navlinks(props) {
             <NavLink to='/' exact>ALL USERS</NavLink>
         </li>
         <li>
-            <NavLink to='/ul/places'>NEW PLACES</NavLink>
+            <NavLink to='/ul/places'>MY PLACES</NavLink>
         </li>
         <li>
             <NavLink to='/places/new'>ADD PLACE</NavLink>
