@@ -1,14 +1,15 @@
 import PlaceItem from './PlaceItem'
 import Card from '../../shared/UIElements/Card'
+import Button from '../../shared/components/FormElements/Button'
 import './PlaceList.css'
 
 function PlaceList(props) {
-   if(props.items === 0){
+   if(props.items.length === 0){
     return(
         <div className='place-list center'>
             <Card>
                 <h2>No place found. Maybe create one?</h2>
-                <button>Share place</button>
+                <Button to='/places/new'>Share place</Button>
             </Card>
         </div>
     )

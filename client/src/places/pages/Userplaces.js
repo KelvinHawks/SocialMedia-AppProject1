@@ -2,7 +2,8 @@ import React from 'react'
 import PlaceList from '../components/PlaceList'
 import { useParams } from 'react-router-dom'
 
-    const DUMMY_PLACES = [{
+    const DUMMY_PLACES = [
+        {
         id:'p1',
         title:'Empire state building',
         description:'one of the most famous sky scrappers in the world',
@@ -25,10 +26,12 @@ import { useParams } from 'react-router-dom'
             lng: -73.9856644
         },
         creator:'u2'
-    }]
+    }
+]
     const Userplaces = ()=>{
         const userId = useParams().userId;
         const loadedPlace = DUMMY_PLACES.filter(dummyPlace=> dummyPlace.creator === userId)
+
         return <PlaceList items={loadedPlace}/>
     }
 

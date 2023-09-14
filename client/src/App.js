@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Users from './users/pages/Users';
 import NewPlace from './places/pages/NewPlace';
 import Mainnavigation from './shared/components/Navigation/Mainnavigation';
-import Userplaces from './places/pages/Userplaces';
 import './App.css';
 import UpdatePlace from './places/pages/UpdatePlace';
+import Userplaces from './places/pages/Userplaces';
 
 
 function App() {
