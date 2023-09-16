@@ -5,7 +5,7 @@ import Mainnavigation from './shared/components/Navigation/Mainnavigation';
 import './App.css';
 import UpdatePlace from './places/pages/UpdatePlace';
 import Userplaces from './places/pages/Userplaces';
-
+import Auth from './users/pages/Auth';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
             <Route path='/places/new' exact element={<NewPlace/>}></Route>
             <Route path='/:userId/places' exact element={<Userplaces/>}></Route>
             <Route path='/places/:placeId' exact element={<UpdatePlace/>}></Route>
+            <Route path='/auth' exact element={<Auth/>}></Route>
           </Routes>
         </main>
       </Router>
