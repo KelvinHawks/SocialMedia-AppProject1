@@ -24,7 +24,6 @@ function App() {
         <Route path='/:userId/places' exact element={<Userplaces/>}></Route>
         <Route path='/places/new' exact element={<NewPlace/>}></Route> 
         <Route path='/places/:placeId' exact element={<UpdatePlace/>}></Route>
-       
       </React.Fragment>
     )
   }else{

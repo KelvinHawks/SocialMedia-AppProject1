@@ -1,10 +1,29 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const app = express();
 
-app.use((req,res)=>{
-    res.send('<h1>Hello people</h1>')
-})
+app.use((req, res, next) => {
+  let body = "";
+  req.on("end", () => {
+    const username = body.split("=")[1];
+    if (username) {
+      req.body = { name: username };
+    }
 
-app.listen(5000, ()=>{
-    console.log('app listening on port 5000');
-})
+    next();
+  });
+  req.on("data", (chunk) => {
+    body += chunk;
+  });
+});
+app.use((req, res, next) => {
+  if (req.body) {
+    return res.send("<h1>" + req.body.name + "</h1>");
+  }
+  res.send(
+    '<form method="POST"><input type="text" name="username"><button type="submit">Submit</button></form>'
+  );
+});
+
+app.listen(5000, () => {
+  console.log("app listening on port 5000");
+});
