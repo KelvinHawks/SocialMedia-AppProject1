@@ -1,29 +1,12 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
-app.use((req, res, next) => {
-  let body = "";
-  req.on("end", () => {
-    const username = body.split("=")[1];
-    if (username) {
-      req.body = { name: username };
-    }
+const placesRoutes = require("./routes/places-routes");
 
-    next();
-  });
-  req.on("data", (chunk) => {
-    body += chunk;
-  });
-});
-app.use((req, res, next) => {
-  if (req.body) {
-    return res.send("<h1>" + req.body.name + "</h1>");
-  }
-  res.send(
-    '<form method="POST"><input type="text" name="username"><button type="submit">Submit</button></form>'
-  );
-});
+app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use("/api/places", placesRoutes);
 app.listen(5000, () => {
   console.log("app listening on port 5000");
 });
