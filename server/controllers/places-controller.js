@@ -1,5 +1,6 @@
 const uuid = require("uuid");
 const HttpError = require("../models/http-error");
+const Place = require("../models/place");
 const { validationResult } = require("express-validator");
 const getCoordsForAddress = require("../util/location");
 
@@ -29,28 +30,49 @@ let DUMMY_PLACES = [
   },
 ];
 
-const getPlaceById = (req, res, next) => {
+const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
-  const place = DUMMY_PLACES.find((p) => {
-    return p.id === placeId;
-  });
-  if (!place) {
-    throw new HttpError("Could not find a place for the provided placeId", 404);
-  } else {
-    res.json({ place });
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a place",
+      500
+    );
+    return next(error);
   }
+
+  if (!place) {
+    const error = new HttpError(
+      "Could not find a place for the provided placeId",
+      404
+    );
+    return next(error);
+  }
+  res.json({ place: place.toObject({ getters: true }) });
 };
 
-const getPlacesByUserId = (req, res, next) => {
+const getPlacesByUserId = async (req, res, next) => {
   const userId = req.params.uid;
-  const places = DUMMY_PLACES.filter((p) => {
-    return p.creator === userId;
-  });
-  if (!places || places.length === 0) {
-    throw new Error("Could not find places for the provided userId", 404);
-  } else {
-    res.json({ places });
+  let place;
+  try {
+    place = await Place.find({ creator: userId });
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, Could not find a place whith a given user id",
+      500
+    );
+    return next(error);
   }
+  if (!place || place.length === 0) {
+    const error = new Error(
+      "Could not find places for the provided userId",
+      404
+    );
+    return next(error);
+  }
+  res.json({ place: place.map((p) => p.toObject({ getters: true })) });
 };
 
 const createPlace = async (req, res, next) => {
@@ -69,15 +91,21 @@ const createPlace = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-  const createdPlace = {
-    id: uniqueId,
+  const createdPlace = new Place({
     title,
     description,
-    location: coordinates,
     address,
+    location: coordinates,
+    image:
+      "https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg",
     creator,
-  };
-  DUMMY_PLACES.push(createdPlace);
+  });
+  try {
+    await createdPlace.save();
+  } catch (err) {
+    const error = new HttpError("Creating place failed, please try again", 500);
+    return next(error);
+  }
   res.status(201).json({ place: createdPlace });
 };
 
