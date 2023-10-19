@@ -26,7 +26,7 @@ const signup = async (req, res, next) => {
     );
     next(error);
   }
-  const { name, email, password, places } = req.body;
+  const { name, email, password } = req.body;
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -44,7 +44,7 @@ const signup = async (req, res, next) => {
     image:
       "https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg",
     password,
-    places,
+    places: [],
   });
   try {
     await createdUser.save();
