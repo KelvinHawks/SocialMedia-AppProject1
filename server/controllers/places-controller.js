@@ -1,12 +1,9 @@
-const uuid = require("uuid");
 const HttpError = require("../models/http-error");
 const Place = require("../models/place");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 const getCoordsForAddress = require("../util/location");
-
-const uniqueId = uuid.v4();
 
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
@@ -141,7 +138,7 @@ const deletePlace = async (req, res, next) => {
   const placeId = req.params.pid;
   let place;
   try {
-    place = await Place.findById(placeId);
+    place = await Place.findById(placeId).populate("creator");
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete place",
@@ -149,8 +146,17 @@ const deletePlace = async (req, res, next) => {
     );
     return next(error);
   }
+  if (!place) {
+    const error = new HttpError("Could not find place for this Id", 404);
+    return next(error);
+  }
   try {
-    await Place.deleteOne(place);
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await place.deleteOne({ session: sess });
+    place.creator.places.pull(place);
+    await place.creator.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete place...",
@@ -158,6 +164,7 @@ const deletePlace = async (req, res, next) => {
     );
     return next(error);
   }
+
   res.status(200).json({ message: "Deleted place" });
 };
 
