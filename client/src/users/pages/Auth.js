@@ -27,9 +27,9 @@ function Auth() {
     },
     false
   );
-  const authSubmitHandler = (e) => {
+  const authSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
+    fetch("http://localhost/api");
     auth.login();
   };
   const switchModeHandler = () => {
