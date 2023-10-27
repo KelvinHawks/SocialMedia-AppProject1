@@ -12,7 +12,7 @@ import Card from "../../shared/UIElements/Card";
 import { AuthContext } from "../../shared/context/auth-context";
 import ErrorModal from "../../shared/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
-import useHttpClient from "../../shared/hooks/http-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import "./Auth.css";
 
 function Auth() {
@@ -41,7 +41,10 @@ function Auth() {
           "http://localhost:5000/api/users/login",
           "POST",
 
-          JSON.stringify({ email: formState.inputs.email.value }),
+          JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
           { "content-Type": "application/json" }
         );
 

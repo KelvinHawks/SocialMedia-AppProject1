@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-function useHttpClient() {
+export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -9,19 +9,21 @@ function useHttpClient() {
   const sendRequest = useCallback(
     async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
-      const httpAbortControler = new AbortController();
-      activeHttpRequest.current.push(httpAbortControler);
+      const httpAbortCtrl = new AbortController();
+      activeHttpRequest.current.push(httpAbortCtrl);
       try {
         const response = await fetch(url, {
           method,
           body,
           headers,
-          signal: httpAbortControler.signal,
+          signal: httpAbortCtrl.signal,
         });
         const responseData = await response.json();
+
         activeHttpRequest.current = activeHttpRequest.current.filter(
-          (reqCtrl) => reqCtrl !== httpAbortControler
+          (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
+
         if (!response.ok) {
           throw new Error(responseData.message);
         }
@@ -44,6 +46,4 @@ function useHttpClient() {
     };
   }, []);
   return { isLoading, error, sendRequest, clearError };
-}
-
-export default useHttpClient;
+};
