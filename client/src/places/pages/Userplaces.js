@@ -1,39 +1,39 @@
-import React from 'react'
-import PlaceList from '../components/PlaceList'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import PlaceList from "../components/PlaceList";
+import { useParams } from "react-router-dom";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
+const Userplaces = () => {
+  const [loadedPlaces, setLoadedPlaces] = useState();
+  const { isLoading, error, clearError, sendRequest } = useHttpClient();
 
-    const DUMMY_PLACES = [
-        {
-        id:'p1',
-        title:'Empire state building',
-        description:'one of the most famous sky scrappers in the world',
-        imageUrl:'https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg',
-        address:'20 W 34th St., New York, NY 10001, United States',
-        location:{
-            lat: 40.7484405,
-            lng: -73.9856644
-        },
-        creator:'u1'
-    },
-    {
-        id:'p2',
-        title:'Empire state building',
-        description:'one of the most famous sky scrappers in the world',
-        imageUrl:'https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg',
-        address:'20 W 34th St., New York, NY 10001, United States',
-        location:{
-            lat: 40.7484405,
-            lng: -73.9856644
-        },
-        creator:'u2'
-    }
-]
-    const Userplaces = ()=>{
-        const userId = useParams().userId;
-        const loadedPlace = DUMMY_PLACES.filter(dummyPlace=> dummyPlace.creator === userId)
+  const userId = useParams().userId;
 
-        return <PlaceList items={loadedPlace}/>
-    }
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/places/user/${userId}`
+        );
 
+        setLoadedPlaces(responseData.place);
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, [sendRequest, userId]);
 
-export default Userplaces
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner asOverLay />
+        </div>
+      )}
+      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+    </React.Fragment>
+  );
+};
+
+export default Userplaces;
