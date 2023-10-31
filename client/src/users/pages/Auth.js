@@ -127,7 +127,7 @@ function Auth() {
             element="input"
             type="password"
             label="password"
-            validators={[VALIDATOR_MINLENGTH(8)]}
+            validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Password must contain 8 characters"
             onInput={inputHandler}
           />
