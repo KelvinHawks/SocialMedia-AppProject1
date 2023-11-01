@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 //import { Navigate } from "react-router-dom";
 import {
   VALIDATOR_MINLENGTH,
@@ -34,7 +35,7 @@ function Auth() {
   );
   const authSubmitHandler = async (e) => {
     e.preventDefault();
-
+    console.log(formState.inputs);
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -76,6 +77,7 @@ function Auth() {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -85,6 +87,10 @@ function Auth() {
           ...formState.inputs,
           name: {
             value: "",
+            isValid: false,
+          },
+          image: {
+            value: null,
             isValid: false,
           },
         },
@@ -112,6 +118,9 @@ function Auth() {
               errorText="Username required"
               onInput={inputHandler}
             />
+          )}
+          {!isLoginMode && (
+            <ImageUpload id="image" center onInput={inputHandler} />
           )}
           <Input
             id="email"
