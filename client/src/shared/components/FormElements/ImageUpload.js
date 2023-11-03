@@ -5,7 +5,6 @@ import Button from "./Button";
 function ImageUpload(props) {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
-
   const [isValid, setIsValid] = useState(false);
   const filePickerRef = useRef();
 
@@ -30,7 +29,6 @@ function ImageUpload(props) {
       setFile(pickedFile);
       setIsValid(true);
       fileIsValid = true;
-      return;
     } else {
       setIsValid(false);
       fileIsValid = false;
