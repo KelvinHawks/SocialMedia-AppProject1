@@ -1,4 +1,5 @@
 const HttpError = require("../models/http-error");
+const fs = require("fs");
 const Place = require("../models/place");
 const User = require("../models/user");
 const mongoose = require("mongoose");
@@ -71,8 +72,7 @@ const createPlace = async (req, res, next) => {
     description,
     address,
     location: coordinates,
-    image:
-      "https://cdn.britannica.com/73/114973-050-2DC46083/Midtown-Manhattan-Empire-State-Building-New-York.jpg",
+    image: req.file.path,
     creator,
   });
   let user;
@@ -150,6 +150,8 @@ const deletePlace = async (req, res, next) => {
     const error = new HttpError("Could not find place for this Id", 404);
     return next(error);
   }
+  const imagePath = place.image;
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -164,7 +166,7 @@ const deletePlace = async (req, res, next) => {
     );
     return next(error);
   }
-
+  fs.unlink(imagePath, (err) => console.log(err));
   res.status(200).json({ message: "Deleted place" });
 };
 
