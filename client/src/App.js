@@ -15,18 +15,18 @@ import Userplaces from "./places/pages/Userplaces";
 import Auth from "./users/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
   const [userId, setUserId] = useState();
-  const login = useCallback((uid) => {
+  const login = useCallback((uid, token) => {
     setUserId(uid);
-    setIsLoggedIn(true);
+    setToken(token);
   }, []);
   const logout = useCallback(() => {
+    setToken(null);
     setUserId(null);
-    setIsLoggedIn(false);
   }, []);
   let routes;
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <React.Fragment>
         <Route path="/" exact>
@@ -64,7 +64,8 @@ function App() {
     <div className="App">
       <AuthContext.Provider
         value={{
-          isLoggedIn: isLoggedIn,
+          isLoggedIn: !!token,
+          token: token,
           userId: userId,
           login: login,
           logout: logout,
