@@ -89,7 +89,7 @@ function NewPlace() {
           id="address"
           element="input"
           type="text"
-          label="Adress"
+          label="Address"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid address"
           onInput={inputHandler}
