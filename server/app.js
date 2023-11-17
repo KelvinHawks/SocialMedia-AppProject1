@@ -2,7 +2,6 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
 
 const HttpError = require("./models/http-error");
 const placesRoutes = require("./routes/places-routes");
@@ -24,7 +23,6 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
   next();
 });
-dotenv.config();
 
 app.use("/api/places", placesRoutes);
 
@@ -48,7 +46,9 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ypfmwea.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+  )
   .then(() => {
     app.listen(5000, () => {
       console.log("app listening on port 5000");

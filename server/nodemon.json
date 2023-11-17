@@ -1,0 +1,8 @@
+{
+  "env": {
+    "DB_USER": "socialApp_data",
+    "DB_PASSWORD": "kimani35",
+    "DB_NAME": "places",
+    "JWT_KEY": "supersecret_dont_share"
+  }
+}
