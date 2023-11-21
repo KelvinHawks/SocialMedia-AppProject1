@@ -118,7 +118,7 @@ const login = async (req, res, next) => {
       { expiresIn: "1h" }
     );
   } catch (err) {
-    const error = new HttpError("Login In failed, please try again", 500);
+    const error = new HttpError("Login failed, please try again", 500);
     return next(error);
   }
   res.json({

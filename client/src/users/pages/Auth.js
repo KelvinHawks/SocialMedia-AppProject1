@@ -70,7 +70,8 @@ function Auth() {
   };
 
   const switchModeHandler = () => {
-    if (!isLoginMode) {
+    // revisit by putting !
+    if (isLoginMode) {
       setFormData(
         {
           ...formState.inputs,

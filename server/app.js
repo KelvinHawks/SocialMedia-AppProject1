@@ -2,11 +2,13 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
-
+const dotenv = require("dotenv");
 const HttpError = require("./models/http-error");
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
 const mongoose = require("mongoose");
+
+dotenv.config();
 
 const app = express();
 
@@ -46,9 +48,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ypfmwea.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     app.listen(5000, () => {
       console.log("app listening on port 5000");
