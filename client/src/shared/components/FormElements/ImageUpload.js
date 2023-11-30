@@ -27,6 +27,7 @@ function ImageUpload(props) {
     if (e.target.files && e.target.files.length === 1) {
       pickedFile = e.target.files[0];
       setFile(pickedFile);
+
       setIsValid(true);
       fileIsValid = true;
     } else {

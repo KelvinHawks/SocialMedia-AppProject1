@@ -85,15 +85,15 @@ const UpdatePlace = () => {
       </div>
     );
   }
-  if (!loadedPlace && !error) {
-    return (
-      <div className="center">
-        <Card>
-          <h2>Could not find place</h2>
-        </Card>
-      </div>
-    );
-  }
+  // if (!loadedPlace && !error) {
+  //   return (
+  //     <div className="center">
+  //       <Card>
+  //         <h2>Could not find place</h2>
+  //       </Card>
+  //     </div>
+  //   );
+  // }
 
   return (
     <React.Fragment>
