@@ -10,7 +10,7 @@ function UserItem(props) {
         <Link to={`/${props.id}/places`}>
           <div className="user-item__image">
             <Avatar
-              image={`http://localhost:5000/${props.image}`}
+              image={`https://social-app-6p55.onrender.com/${props.image}`}
               alt={props.name}
             />
           </div>

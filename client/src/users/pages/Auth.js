@@ -39,7 +39,7 @@ function Auth() {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          "https://social-app-6p55.onrender.com/api/users/login",
           "POST",
 
           JSON.stringify({
@@ -59,7 +59,7 @@ function Auth() {
         formData.append("password", formState.inputs.password.value);
         formData.append("image", formState.inputs.image.value);
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          "https://social-app-6p55.onrender.com/api/users/signup",
           "POST",
           formData
         );

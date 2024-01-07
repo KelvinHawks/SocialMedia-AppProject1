@@ -10,7 +10,7 @@ function Users() {
     const fetchUsers = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/"
+          "https://social-app-6p55.onrender.com/api/users/"
         );
 
         setLoadedUsers(responseData.users);

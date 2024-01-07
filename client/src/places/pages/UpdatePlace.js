@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import Card from "../../shared/UIElements/Card";
+//import Card from "../../shared/UIElements/Card";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import {
   VALIDATOR_MINLENGTH,
@@ -39,7 +39,7 @@ const UpdatePlace = () => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/places/${placeId}`
+          `https://social-app-6p55.onrender.com/api/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
         setFormData(
@@ -64,7 +64,7 @@ const UpdatePlace = () => {
     e.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/places/${placeId}`,
+        `https://social-app-6p55.onrender.com/api/places/${placeId}`,
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,

@@ -29,7 +29,7 @@ function PlaceItem(props) {
     setShowConfirmModal(false);
     try {
       sendRequest(
-        `http://localhost:5000/api/places/${props.id}`,
+        `https://social-app-6p55.onrender.com/api/places/${props.id}`,
         "DELETE",
         null,
         {
@@ -86,7 +86,7 @@ function PlaceItem(props) {
             {isLoading && <LoadingSpinner asOverlay />}
             <div className="place-item__image">
               <img
-                src={`http://localhost:5000/${props.image}`}
+                src={`https://social-app-6p55.onrender.com/${props.image}`}
                 alt={props.title}
               />
             </div>

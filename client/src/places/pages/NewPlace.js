@@ -49,9 +49,14 @@ function NewPlace() {
       formData.append("address", formState.inputs.address.value);
 
       formData.append("image", formState.inputs.image.value);
-      await sendRequest("http://localhost:5000/api/places", "POST", formData, {
-        authorization: "Bearer " + auth.token,
-      });
+      await sendRequest(
+        "https://social-app-6p55.onrender.com/api/places",
+        "POST",
+        formData,
+        {
+          authorization: "Bearer " + auth.token,
+        }
+      );
       history.push("/");
     } catch (error) {}
   };

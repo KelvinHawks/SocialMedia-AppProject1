@@ -14,7 +14,7 @@ const Userplaces = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/places/user/${userId}`
+          `https://social-app-6p55.onrender.com/api/places/user/${userId}`
         );
 
         setLoadedPlaces(responseData.place);
