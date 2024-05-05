@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+// import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 //import { Navigate } from "react-router-dom";
 import {
   VALIDATOR_MINLENGTH,
@@ -14,6 +14,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import ErrorModal from "../../shared/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { GenderCheckbox } from "./GenderCheckBox";
 import "./Auth.css";
 
 function Auth() {
@@ -39,7 +40,7 @@ function Auth() {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          `${process.env.REACT_APP_API_URL}/api/users/login`,
           "POST",
 
           JSON.stringify({
@@ -53,15 +54,25 @@ function Auth() {
       } catch (err) {}
     } else {
       try {
-        const formData = new FormData();
-        formData.append("email", formState.inputs.email.value);
-        formData.append("name", formState.inputs.name.value);
-        formData.append("password", formState.inputs.password.value);
-        formData.append("image", formState.inputs.image.value);
+        // const formData = new FormData();
+        // formData.append("email", formState.inputs.email.value);
+        // formData.append("name", formState.inputs.name.value);
+        // formData.append("password", formState.inputs.password.value);
+        // formData.append("gender", formState.inputs.gender);
+        // formData.append("image", formState.inputs.image.value);
+
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          "http://127.0.0.1:5000/api/users/signup",
           "POST",
-          formData
+          //formData
+
+          JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+            gender: formState.inputs.gender,
+          }),
+          { "content-Type": "application/json" }
         );
 
         auth.login(responseData.userId, responseData.token);
@@ -76,7 +87,7 @@ function Auth() {
         {
           ...formState.inputs,
           name: undefined,
-          image: undefined,
+          gender: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -88,15 +99,19 @@ function Auth() {
             value: "",
             isValid: false,
           },
-          image: {
-            value: null,
-            isValid: false,
-          },
+          // image: {
+          //   value: null,
+          //   isValid: false,
+          // },
         },
         false
       );
     }
     setIsLoginMode((prevMode) => !prevMode);
+  };
+
+  const handleCheckboxChange = (gender) => {
+    setFormData({ ...formState.inputs, gender }, true);
   };
 
   return (
@@ -118,14 +133,15 @@ function Auth() {
               onInput={inputHandler}
             />
           )}
-          {!isLoginMode && (
+
+          {/* {!isLoginMode && (
             <ImageUpload
               id="image"
               center
               onInput={inputHandler}
               errorText="Please provide an image"
             />
-          )}
+          )} */}
           <Input
             id="email"
             element="input"
@@ -144,6 +160,13 @@ function Auth() {
             errorText="Password must contain 8 characters"
             onInput={inputHandler}
           />
+          {!isLoginMode && (
+            <GenderCheckbox
+              onCheckboxChange={handleCheckboxChange}
+              selectedGender={formState.inputs.gender}
+            />
+          )}
+
           <Button type="submit" disabled={!formState.isValid}>
             {isLoginMode ? "LOGIN" : "SIGNUP"}
           </Button>

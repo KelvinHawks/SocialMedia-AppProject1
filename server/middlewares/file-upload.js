@@ -26,7 +26,7 @@ const uploadFile = (req, res, next) => {
       let error = isValid ? null : new Error("Invalid mime type!");
       cb(error, isValid);
     },
-  }).single("image");
+  });
   const baseUrl = "http://localhost:5000";
   const imageUrl = path.join(baseUrl, "uploads/images", imagePath);
   req.fileUrl = imageUrl;

@@ -13,3 +13,16 @@
 .authentication form {
   margin-bottom: 1rem;
 }
+
+.gender-selector {
+  display: flex;
+  flex-direction: column;
+}
+
+.gender-selector label {
+  margin-bottom: 10px;
+}
+
+.gender-selector input[type="radio"] {
+  margin-right: 5px;
+}

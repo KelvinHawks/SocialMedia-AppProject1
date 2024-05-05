@@ -4,7 +4,7 @@ import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import ErrorModal from "../../shared/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/UIElements/LoadingSpinner";
-import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+// import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
@@ -30,10 +30,10 @@ function NewPlace() {
         value: "",
         isValid: false,
       },
-      image: {
-        value: null,
-        isValid: false,
-      },
+      // image: {
+      //   value: null,
+      //   isValid: false,
+      // },
     },
     false
   );
@@ -43,16 +43,22 @@ function NewPlace() {
   const placeSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("title", formState.inputs.title.value);
-      formData.append("description", formState.inputs.description.value);
-      formData.append("address", formState.inputs.address.value);
+      // const formData = new FormData();
+      // formData.append("title", formState.inputs.title.value);
+      // formData.append("description", formState.inputs.description.value);
+      // formData.append("address", formState.inputs.address.value);
 
-      formData.append("image", formState.inputs.image.value);
+      // formData.append("image", formState.inputs.image.value);
+
       await sendRequest(
-        "https://social-app-6p55.onrender.com/api/places",
+        `${process.env.REACT_APP_API_URL}/api/places`,
         "POST",
-        formData,
+
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+          address: formState.inputs.address.value,
+        }),
         {
           authorization: "Bearer " + auth.token,
         }
@@ -76,12 +82,12 @@ function NewPlace() {
           errorText="Please enter a valid title"
           onInput={inputHandler}
         />
-        <ImageUpload
+        {/* <ImageUpload
           id="image"
           center
           onInput={inputHandler}
           errorText="Please provide an image"
-        />
+        /> */}
         <Input
           id="description"
           element="textarea"

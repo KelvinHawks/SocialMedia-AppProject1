@@ -21,12 +21,13 @@ const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      "Invalid inputs passed, please check your data",
+      "Invalid inputs passed, please check your data22",
       422
     );
     next(error);
   }
-  const { name, email, password } = req.body;
+  const { name, email, password, gender } = req.body;
+
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -45,12 +46,15 @@ const signup = async (req, res, next) => {
     const error = new HttpError("Could not create user, please try again", 500);
     return next(error);
   }
+  const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${name}`;
+  const girlProfilePic = `https://avatar.iran.liara.run/public/boy?username=${name}`;
 
   const createdUser = new User({
     name,
     email,
-    image: req.file.path,
+    gender,
     password: hashedPassword,
+    image: gender === "male" ? boyProfilePic : girlProfilePic,
     places: [],
   });
   try {

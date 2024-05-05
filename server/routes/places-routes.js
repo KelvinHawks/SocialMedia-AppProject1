@@ -12,7 +12,6 @@ router.get("/user/:uid", placeControllers.getPlacesByUserId);
 router.use(checkAuth);
 router.post(
   "/",
-  fileUpload.single("image"),
   [
     check("title").not().isEmpty(),
     check("description").isLength({ min: 5 }),
