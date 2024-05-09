@@ -43,17 +43,9 @@ function NewPlace() {
   const placeSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      // const formData = new FormData();
-      // formData.append("title", formState.inputs.title.value);
-      // formData.append("description", formState.inputs.description.value);
-      // formData.append("address", formState.inputs.address.value);
-
-      // formData.append("image", formState.inputs.image.value);
-
       await sendRequest(
         `${process.env.REACT_APP_API_URL}/api/places`,
         "POST",
-
         JSON.stringify({
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
