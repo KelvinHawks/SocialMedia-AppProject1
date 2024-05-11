@@ -39,7 +39,7 @@ const UpdatePlace = () => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `https://social-app-6p55.onrender.com/api/places/${placeId}`
+          `${process.env.REACT_APP_API_URL}/api/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
         setFormData(
@@ -64,7 +64,7 @@ const UpdatePlace = () => {
     e.preventDefault();
     try {
       await sendRequest(
-        `https://social-app-6p55.onrender.com/api/places/${placeId}`,
+        `${process.env.REACT_APP_API_URL}/api/places/${placeId}`,
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,

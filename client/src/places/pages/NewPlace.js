@@ -42,16 +42,19 @@ function NewPlace() {
   const history = useHistory();
   const placeSubmitHandler = async (e) => {
     e.preventDefault();
+
     try {
       await sendRequest(
-        `${process.env.REACT_APP_API_URL}/api/places`,
+        `${process.env.REACT_APP_API_URL}/api/places/`,
         "POST",
         JSON.stringify({
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           address: formState.inputs.address.value,
+          creator: auth.userId,
         }),
         {
+          "Content-Type": "application/json",
           authorization: "Bearer " + auth.token,
         }
       );
