@@ -28,7 +28,7 @@ export const GenderCheckbox = ({ onCheckboxChange, selectedGender }) => {
           <input
             type="checkbox"
             className="checkbox border-slate-900"
-            checked={selectedGender === "female"}
+            checked={selectedGender === "female" }
             onChange={() => onCheckboxChange("female")}
           />
         </label>
