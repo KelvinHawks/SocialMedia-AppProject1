@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import ImageUpload from "../../shared/components/FormElements/ImageUpload"
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 //import { Navigate } from "react-router-dom";
 import {
   VALIDATOR_MINLENGTH,
@@ -59,7 +59,7 @@ function Auth() {
         formData.append("email", formState.inputs.email.value);
         formData.append("name", formState.inputs.name.value);
         formData.append("password", formState.inputs.password.value);
-        formData.append("gender", formState.inputs.gender);
+        //formData.append("gender", formState.inputs.gender);
         formData.append("image", formState.inputs.image.value);
 
         const responseData = await sendRequest(
@@ -113,8 +113,7 @@ function Auth() {
   // const handleCheckboxChange = (gender) => {
   //    setIsChecked(!isChecked);
   //  setFormData({ ...formState.inputs, gender },isChecked);
-    
-   
+
   // };
 
   return (
@@ -137,7 +136,6 @@ function Auth() {
             />
           )}
 
-         
           <Input
             id="email"
             element="input"
@@ -147,7 +145,7 @@ function Auth() {
             errorText="Please enter e valid email address"
             onInput={inputHandler}
           />
-           {!isLoginMode && (
+          {!isLoginMode && (
             <ImageUpload
               id="image"
               center
@@ -164,7 +162,7 @@ function Auth() {
             errorText="Password must contain 8 characters"
             onInput={inputHandler}
           />
-          
+
           {/* {!isLoginMode && (
             <GenderCheckbox
               onCheckboxChange={handleCheckboxChange}
